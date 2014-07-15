@@ -20,12 +20,10 @@ class App < Sinatra::Base
   end
 
   post "/registrations" do
-    insert_sql = <<-SQL
-      INSERT INTO users (username, email, password, name_is_hunter)
-      VALUES ('#{params[:username]}', '#{params[:email]}', '#{params[:password]}', '#{params[:name_is_hunter]}')
-    SQL
 
-    @database_connection.sql(insert_sql)
+
+    @database_connection.sql("INSERT INTO users (username, email, password, name_is_hunter)
+    VALUES ('#{params[:username]}', '#{params[:email]}', '#{params[:password]}', '#{params[:name_is_hunter]}')")
     flash[:notice] = "Thanks for signing up"
 
     redirect "/"
