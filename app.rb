@@ -20,12 +20,18 @@ class App < Sinatra::Base
   end
 
   post "/registrations" do
+    hunter_value = params[:name_is_hunter]
 
+    if hunter_value.to_i == 1
 
     @database_connection.sql("INSERT INTO users (username, email, password, name_is_hunter)
     VALUES ('#{params[:username]}', '#{params[:email]}', '#{params[:password]}', '#{params[:name_is_hunter]}')")
     flash[:notice] = "Thanks for signing up"
-
     redirect "/"
+
+    else
+      flash[:notice] = "You're name ain't Hunter!"
+      redirect "/register"
+    end
   end
 end
